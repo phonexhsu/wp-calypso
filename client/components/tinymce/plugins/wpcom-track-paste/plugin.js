@@ -8,11 +8,12 @@ import tinymce from 'tinymce/tinymce';
  * Internal dependencies
  */
 import { recordTracksEvent } from 'state/analytics/actions';
+import { pasteEvent } from 'state/ui/editor/actions';
 
 const debug = debugFactory( 'calypso:tinymce-plugins:wpcom-track-paste' );
 
-const SOURCE_GOOGLE_DOCS = 'google_docs';
-const SOURCE_UNKNOWN = 'unknown';
+export const SOURCE_GOOGLE_DOCS = 'google_docs';
+export const SOURCE_UNKNOWN = 'unknown';
 
 function trackPaste( editor ) {
 	debug( 'init' );
@@ -37,10 +38,14 @@ function trackPaste( editor ) {
 	const recordPasteEvent = ( mode, types ) => {
 		debug( 'track paste event' );
 		const typesAsArray = Array.from( types );
+		const source = getSource( typesAsArray );
+
+		store.dispatch( pasteEvent( source ) );
+
 		store.dispatch( recordTracksEvent( 'calypso_editor_content_paste', {
 			mode,
 			types: typesAsArray.join( ', ' ),
-			source: getSource( typesAsArray )
+			source
 		} ) );
 	};
 
