@@ -2,13 +2,6 @@
  * Internal dependencies
  */
 import {
-	initialize as initializeDirectly,
-	askQuestion as askDirectlyQuestion,
-	maximize as maximizeDirectly,
-	minimize as minimizeDirectly,
-	openAskForm as openDirectlyAskForm,
-} from 'lib/directly';
-import {
 	DIRECTLY_ASK_QUESTION,
 	DIRECTLY_INITIALIZE,
 	DIRECTLY_MAXIMIZE,
@@ -16,28 +9,22 @@ import {
 	DIRECTLY_OPEN_ASK_FORM,
 } from 'state/action-types';
 
-export const askQuestion = ( questionText, name, email ) => ( dispatch ) => {
-	dispatch( { type: DIRECTLY_ASK_QUESTION, questionText, name, email } );
-	askDirectlyQuestion( questionText, name, email );
-};
+export function askQuestion( questionText, name, email ) {
+	return { type: DIRECTLY_ASK_QUESTION, questionText, name, email };
+}
 
-// See README for list of options
-export const initialize = ( config = {} ) => ( dispatch ) => {
-	initializeDirectly( config );
-	dispatch( { type: DIRECTLY_INITIALIZE, config } );
-};
+export function initialize( config = {} ) {
+	return { type: DIRECTLY_INITIALIZE, config };
+}
 
-export const maximize = () => ( dispatch ) => {
-	dispatch( { type: DIRECTLY_MAXIMIZE } );
-	maximizeDirectly();
-};
+export function maximize() {
+	return { type: DIRECTLY_MAXIMIZE };
+}
 
-export const minimize = () => ( dispatch ) => {
-	dispatch( { type: DIRECTLY_MINIMIZE } );
-	minimizeDirectly();
-};
+export function minimize() {
+	return { type: DIRECTLY_MINIMIZE };
+}
 
-export const openAskForm = () => ( dispatch ) => {
-	dispatch( { type: DIRECTLY_OPEN_ASK_FORM } );
-	openDirectlyAskForm();
-};
+export function openAskForm() {
+	return { type: DIRECTLY_OPEN_ASK_FORM };
+}
