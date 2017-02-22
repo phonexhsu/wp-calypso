@@ -529,8 +529,8 @@ export function tryAndCustomize( themeId, siteId ) {
 export function installAndTryAndCustomizeTheme( themeId, siteId ) {
 	return ( dispatch ) => {
 		return dispatch( installTheme( themeId, siteId ) )
-			.then( ( id ) => {
-				dispatch( tryAndCustomizeTheme( id, siteId ) );
+			.then( ( installedId ) => {
+				dispatch( tryAndCustomizeTheme( installedId, siteId ) );
 			} );
 	};
 }
@@ -574,10 +574,10 @@ export function tryAndCustomizeTheme( themeId, siteId ) {
 export function installAndActivateTheme( themeId, siteId, source = 'unknown', purchased = false ) {
 	return ( dispatch ) => {
 		return dispatch( installTheme( themeId, siteId ) )
-			.then( ( id ) => {
+			.then( ( installedId ) => {
 				// This will be called even if `installTheme` silently fails. We rely on
 				// `activateTheme`'s own error handling here.
-				dispatch( activateTheme( id, siteId, source, purchased ) );
+				dispatch( activateTheme( installedId, siteId, source, purchased ) );
 			} );
 	};
 }
