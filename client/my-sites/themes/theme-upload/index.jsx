@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { connect } from 'react-redux';
-import { includes, find, isEmpty, get } from 'lodash';
+import { includes, find, isEmpty } from 'lodash';
 import Gridicon from 'gridicons';
 import classNames from 'classnames';
 
@@ -261,7 +261,7 @@ class Upload extends React.Component {
 				{ ! inProgress && ! complete && this.renderDropZone() }
 				{ inProgress && this.renderProgressBar() }
 				{ complete && ! failed && uploadedTheme && this.renderTheme() }
-				{ complete && this.props.isSiteAutomatedTransfer && <WpAdminAutoLogin siteUrl={ this.props.siteUrl } /> }
+				{ complete && this.props.isSiteAutomatedTransfer && <WpAdminAutoLogin site={ this.props.selectedSite } /> }
 			</Card>
 		);
 	}
@@ -352,7 +352,6 @@ export default connect(
 			upgradeJetpack: isJetpack && ! hasJetpackSiteJetpackThemesExtendedFeatures( state, siteId ),
 			backPath: getBackPath( state ),
 			showEligibility: ! isJetpack && ( hasEligibilityMessages || ! isEligible ),
-			siteUrl: get( site, 'URL' ),
 			isSiteAutomatedTransfer: isSiteAutomatedTransfer( state, siteId ),
 		};
 	},
