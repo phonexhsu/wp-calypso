@@ -452,16 +452,16 @@ export function installTheme( themeId, siteId ) {
 		}
 
 		return wpcom.undocumented().installThemeOnJetpack( siteId, themeId )
-			.then( () => {
+			.then( ( { id } ) => {
 				// We do not `dispatch( receiveTheme( theme, siteId ) )` here because
 				// in our UI, themes from WP.com (and WP.org) are already present in
 				// a separate list, and we do not want to duplicate them.
-
 				dispatch( {
 					type: THEME_INSTALL_SUCCESS,
 					siteId,
-					themeId
+					themeId: id,
 				} );
+				return id;
 			} )
 			.catch( ( error ) => {
 				dispatch( {
@@ -470,6 +470,13 @@ export function installTheme( themeId, siteId ) {
 					themeId,
 					error
 				} );
+				// Workaround: Installing a theme on an AT site currently
+				// returns an install error even after successful install.
+				// In this case, return a suffixless theme id (mimicking
+				// id return in success case above).
+				if ( error.error === 'install_error' ) {
+					return themeId.replace( '-wpcom', '' );
+				}
 			} );
 	};
 }
@@ -521,8 +528,8 @@ export function tryAndCustomize( themeId, siteId ) {
 export function installAndTryAndCustomizeTheme( themeId, siteId ) {
 	return ( dispatch ) => {
 		return dispatch( installTheme( themeId, siteId ) )
-			.then( () => {
-				dispatch( tryAndCustomizeTheme( themeId, siteId ) );
+			.then( ( id ) => {
+				dispatch( tryAndCustomizeTheme( id || themeId, siteId ) );
 			} );
 	};
 }
@@ -566,10 +573,10 @@ export function tryAndCustomizeTheme( themeId, siteId ) {
 export function installAndActivateTheme( themeId, siteId, source = 'unknown', purchased = false ) {
 	return ( dispatch ) => {
 		return dispatch( installTheme( themeId, siteId ) )
-			.then( () => {
+			.then( ( id ) => {
 				// This will be called even if `installTheme` silently fails. We rely on
 				// `activateTheme`'s own error handling here.
-				dispatch( activateTheme( themeId, siteId, source, purchased ) );
+				dispatch( activateTheme( id || themeId, siteId, source, purchased ) );
 			} );
 	};
 }
