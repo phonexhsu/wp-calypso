@@ -459,7 +459,7 @@ export function installTheme( themeId, siteId ) {
 				dispatch( {
 					type: THEME_INSTALL_SUCCESS,
 					siteId,
-					themeId: id,
+					themeId: id, // id returned from AT sites will have no -wpcom suffix
 				} );
 				return id;
 			} )
@@ -477,6 +477,7 @@ export function installTheme( themeId, siteId ) {
 				if ( error.error === 'install_error' ) {
 					return themeId.replace( '-wpcom', '' );
 				}
+				return themeId;
 			} );
 	};
 }
@@ -529,7 +530,7 @@ export function installAndTryAndCustomizeTheme( themeId, siteId ) {
 	return ( dispatch ) => {
 		return dispatch( installTheme( themeId, siteId ) )
 			.then( ( id ) => {
-				dispatch( tryAndCustomizeTheme( id || themeId, siteId ) );
+				dispatch( tryAndCustomizeTheme( id, siteId ) );
 			} );
 	};
 }
@@ -576,7 +577,7 @@ export function installAndActivateTheme( themeId, siteId, source = 'unknown', pu
 			.then( ( id ) => {
 				// This will be called even if `installTheme` silently fails. We rely on
 				// `activateTheme`'s own error handling here.
-				dispatch( activateTheme( id || themeId, siteId, source, purchased ) );
+				dispatch( activateTheme( id, siteId, source, purchased ) );
 			} );
 	};
 }
