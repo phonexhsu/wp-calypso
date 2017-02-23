@@ -9,16 +9,10 @@ import { expect } from 'chai';
 import {
 	askQuestion,
 	initialize,
-	maximize,
-	minimize,
-	openAskForm,
 } from '../actions';
 import {
 	DIRECTLY_ASK_QUESTION,
 	DIRECTLY_INITIALIZE,
-	DIRECTLY_MAXIMIZE,
-	DIRECTLY_MINIMIZE,
-	DIRECTLY_OPEN_ASK_FORM,
 } from 'state/action-types';
 
 describe( 'actions', () => {
@@ -54,33 +48,6 @@ describe( 'actions', () => {
 			expect( action ).to.eql( {
 				type: DIRECTLY_INITIALIZE,
 				config
-			} );
-		} );
-	} );
-
-	describe( '#maximize()', () => {
-		it( 'returns an action with appropriate type', () => {
-			const action = maximize();
-			expect( action ).to.eql( {
-				type: DIRECTLY_MAXIMIZE
-			} );
-		} );
-	} );
-
-	describe( '#minimize()', () => {
-		it( 'returns an action with appropriate type', () => {
-			const action = minimize();
-			expect( action ).to.eql( {
-				type: DIRECTLY_MINIMIZE
-			} );
-		} );
-	} );
-
-	describe( '#openAskForm()', () => {
-		it( 'returns an action with appropriate type', () => {
-			const action = openAskForm();
-			expect( action ).to.eql( {
-				type: DIRECTLY_OPEN_ASK_FORM
 			} );
 		} );
 	} );

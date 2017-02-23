@@ -13,6 +13,3 @@ are intercepted in middleware.
   Initializes the library with the given configuration options. See [the `api/directly`
   README](../../api/directly) for config options.
 * `askQuestion( questionText, name, email )`
-* `maximize()`
-* `minimize()`
-* `openAskForm()`

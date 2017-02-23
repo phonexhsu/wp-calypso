@@ -11,16 +11,10 @@ import * as directly from 'lib/directly';
 import {
 	DIRECTLY_ASK_QUESTION,
 	DIRECTLY_INITIALIZE,
-	DIRECTLY_MAXIMIZE,
-	DIRECTLY_MINIMIZE,
-	DIRECTLY_OPEN_ASK_FORM,
 } from 'state/action-types';
 import {
 	askQuestion,
 	initialize,
-	maximize,
-	minimize,
-	openAskForm,
 } from '..';
 
 describe( 'Directly data layer', () => {
@@ -35,9 +29,6 @@ describe( 'Directly data layer', () => {
 		// Stub in all lib/directly functions to avoid them being actually called
 		sandbox.stub( directly, 'askQuestion' );
 		sandbox.stub( directly, 'initialize' );
-		sandbox.stub( directly, 'maximize' );
-		sandbox.stub( directly, 'minimize' );
-		sandbox.stub( directly, 'openAskForm' );
 	} );
 
 	describe( '#askQuestion', () => {
@@ -76,48 +67,6 @@ describe( 'Directly data layer', () => {
 
 		it( 'should pass the action through', () => {
 			initialize( store, action, next );
-			expect( next ).to.have.been.calledWith( action );
-		} );
-	} );
-
-	describe( '#maximize', () => {
-		const action = { type: DIRECTLY_MAXIMIZE };
-
-		it( 'should invoke the corresponding Directly function', () => {
-			maximize( store, action, next );
-			expect( directly.maximize ).to.have.been.calledOnce;
-		} );
-
-		it( 'should pass the action through', () => {
-			maximize( store, action, next );
-			expect( next ).to.have.been.calledWith( action );
-		} );
-	} );
-
-	describe( '#minimize', () => {
-		const action = { type: DIRECTLY_MINIMIZE };
-
-		it( 'should invoke the corresponding Directly function', () => {
-			minimize( store, action, next );
-			expect( directly.minimize ).to.have.been.calledOnce;
-		} );
-
-		it( 'should pass the action through', () => {
-			minimize( store, action, next );
-			expect( next ).to.have.been.calledWith( action );
-		} );
-	} );
-
-	describe( '#openAskForm', () => {
-		const action = { type: DIRECTLY_OPEN_ASK_FORM };
-
-		it( 'should invoke the corresponding Directly function', () => {
-			openAskForm( store, action, next );
-			expect( directly.openAskForm ).to.have.been.calledOnce;
-		} );
-
-		it( 'should pass the action through', () => {
-			openAskForm( store, action, next );
 			expect( next ).to.have.been.calledWith( action );
 		} );
 	} );
