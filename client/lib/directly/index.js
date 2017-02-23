@@ -27,15 +27,3 @@ export function initialize( directlyConfig = {} ) {
 export function askQuestion( questionText, name, email ) {
 	DirectlyRTM( 'askQuestion', { questionText, name, email } );
 }
-
-export function maximize() {
-	DirectlyRTM( 'maximize' );
-}
-
-export function minimize() {
-	DirectlyRTM( 'minimize' );
-}
-
-export function openAskForm() {
-	DirectlyRTM( 'openAskForm' );
-}

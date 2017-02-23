@@ -13,9 +13,6 @@ import useFakeDom from 'test/helpers/use-fake-dom';
 import {
 	initialize as initializeDirectly,
 	askQuestion as askDirectlyQuestion,
-	maximize as maximizeDirectly,
-	minimize as minimizeDirectly,
-	openAskForm as openDirectlyAskForm
 } from '..';
 
 describe( 'index', () => {
@@ -61,48 +58,6 @@ describe( 'index', () => {
 			initializeDirectly();
 			askDirectlyQuestion( questionText, name, email );
 			expect( window.DirectlyRTM ).to.have.been.calledWith( 'askQuestion', { questionText, name, email } );
-		} );
-	} );
-
-	describe( 'maximize', () => {
-		it( 'does nothing if Directly hasn\'t been initialized', () => {
-			expect( maximizeDirectly() ).not.to.throw;
-			expect( window.DirectlyRTM ).to.be.undefined;
-		} );
-
-		it( 'invokes the Directly API with the given paramaters', () => {
-			window.DirectlyRTM = sinon.spy();
-			initializeDirectly();
-			maximizeDirectly();
-			expect( window.DirectlyRTM ).to.have.been.calledWith( 'maximize' );
-		} );
-	} );
-
-	describe( 'minimize', () => {
-		it( 'does nothing if Directly hasn\'t been initialized', () => {
-			expect( minimizeDirectly() ).not.to.throw;
-			expect( window.DirectlyRTM ).to.be.undefined;
-		} );
-
-		it( 'invokes the Directly API with the given paramaters', () => {
-			window.DirectlyRTM = sinon.spy();
-			initializeDirectly();
-			minimizeDirectly();
-			expect( window.DirectlyRTM ).to.have.been.calledWith( 'minimize' );
-		} );
-	} );
-
-	describe( 'openAskForm', () => {
-		it( 'does nothing if Directly hasn\'t been initialized', () => {
-			expect( openDirectlyAskForm() ).not.to.throw;
-			expect( window.DirectlyRTM ).to.be.undefined;
-		} );
-
-		it( 'invokes the Directly API with the given paramaters', () => {
-			window.DirectlyRTM = sinon.spy();
-			initializeDirectly();
-			openDirectlyAskForm();
-			expect( window.DirectlyRTM ).to.have.been.calledWith( 'openAskForm' );
 		} );
 	} );
 } );

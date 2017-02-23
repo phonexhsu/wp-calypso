@@ -5,24 +5,42 @@ Directly
 using to provide live chat support to unpaid customers. This module wraps the Directly
 library and API to provide a modular interface to its global functions.
 
-**Unless you have a very good reason, you should interact with Directly through [its
-Redux interface](../../state/directly).**
+## Docs
+- [Directly's website](https://www.directly.com/)
+- [Directly integration and API documentation](https://cloudup.com/cySVQ9R_O6S)
 
 ## Usage
 
-The following functions are exported from this module:
+**Unless you have a very good reason, you should interact with Directly through [its
+Redux interface](../../state/help/directly).**
 
-#### `initialize( config, callback )`
+Not all of the Directly API has been wrapped with this library. Refer to the [API
+documentation](https://cloudup.com/cySVQ9R_O6S) to see other available methods, which
+should be wrapped here rather than called using the global `DirectlyRTM()` function.
 
-**This must be called before any other functions have any effect.**
+The following functions are provided:
 
-Loads and configures the Directly library. All Directly assets will be downloaded
-(about 200KB at the time of writing). This will also auto-open the Directly widget
-for users who recently asked a question (an unavoidable part of the library's mount).
+#### `initialize( config )`
+
+*This must be called before any other functions have effect.*
+
+Configures Directly and loads all its third-party assets (about 200KB at the time of
+writing). If the user has recently interacted with the Directly widget, the widget
+will open up on initialization (an unavoidable part of the library's mount).
 
 Configuration options can only be set once, so any tags/labels/etc you add will apply
-to all Directly questions the user asks until the page reloads. After the first call
-to `initialize` the function becomes a no-op.
+to all Directly questions the user asks until the page reloads. This also means that
+after the first call to `initialize` the function becomes a no-op.
+
+`config` is an Object with these optional keys:
+- `displayAskQuestion`: Boolean. Whether to display the ask form and widget by default or not. Default: `false`
+- `questionCategory`: String. Category that will be assigned to the question asked.
+- `customTags`: Array of strings. Tags that will be assigned to the question asked.
+- `metadata`: Object. Key-Value metadata that will be assigned to the question asked.
+- `userName`: String. The name that will be used to ask the question. Also, if present, the input field to enter user name won't be displayed.
+- `userEmail`: String. The email address of the user who is asking the question. Also, if present, the input field to enter user email won't be displayed.
+- `labels`: Object. The texts defined here will override the default text in the ask widget, the ask button and the header. Valid keys are `askBubble` and `askButton`.
+
 
 Example:
 
@@ -45,30 +63,14 @@ const directlyConfig = {
 	},
 };
 
-const directlyCallback = ( error ) => {
-	if ( error ) {
-		alert( 'I\'ve made a huge mistake...' );
-	}
-};
-
-initializeDirectly( directlyConfig, directlyCallback );
+initializeDirectly( directlyConfig );
 ```
-
-`config` is an Object with these optional keys:
-- `displayAskQuestion`: Boolean. Whether to display the ask form and widget by default or not. Default: `false`
-- `questionCategory`: String. Category that will be assigned to the question asked.
-- `customTags`: Array of strings. Tags that will be assigned to the question asked.
-- `metadata`: Object. Key-Value metadata that will be assigned to the question asked.
-- `userName`: String. The name that will be used to ask the question. Also, if present, the input field to enter user name won't be displayed.
-- `userEmail`: String. The email address of the user who is asking the question. Also, if present, the input field to enter user email won't be displayed.
-- `labels`: Object. The texts defined here will override the default text in the ask widget, the ask button and the header. Valid keys are `askBubble` and `askButton`.
-
-The `callback` function is called when the Directly library loads or runs into an error. The `error` parameter will be `null` for successful load, and an error Object for load failure.
-
 
 #### `askQuestion( questionText, name, email )`
 
-Asks a question with the given params and open the "Alerting experts" view. Example:
+Asks a question with the given params and opens the "Alerting experts" view. All parameters are required strings.
+
+Example:
 
 ```
 import { askQuestion as askDirectlyQuestion } from 'lib/directly';
@@ -78,34 +80,6 @@ askDirectlyQuestion(
 	'Michael Bluth',
 	'michael@bluthcompany.com'
 );
-```
-
-#### `maximize()`
-Maximizes the RTM widget to the full attached view. Example:
-
-```
-import { maximize as maximizeDirectly } from 'lib/directly';
-
-maximizeDirectly();
-```
-
-#### `minimize()`
-Minimizes the RTM widget to the Ask Bubble. Example:
-
-```
-import { minimize as minimizeDirectly } from 'lib/directly';
-
-minimizeDirectly();
-```
-
-#### `openAskForm()`
-Opens the ask form (or bubble). It only has effect if the `displayAskQuestion` setting
-is false. Example:
-
-```
-import { openAskForm as openDirectlyAskForm } from 'lib/directly';
-
-openDirectlyAskForm();
 ```
 
 ## A note on the library integration
