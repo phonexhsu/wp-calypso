@@ -5,7 +5,6 @@ import React, { Component, PropTypes } from 'react';
 import { localize } from 'i18n-calypso';
 import classNames from 'classnames';
 import filesize from 'filesize';
-import noop from 'lodash/noop';
 
 /**
  * Internal dependencies
@@ -21,11 +20,9 @@ class PlanStorageBlock extends Component {
 		mediaStorage: PropTypes.object,
 		siteSlug: PropTypes.string.isRequired,
 		sitePlanName: PropTypes.string.isRequired,
-		onClick: PropTypes.func,
 	};
 
 	static defaultProps = {
-		onClick: noop,
 		siteSlug: ''
 	};
 
@@ -35,7 +32,6 @@ class PlanStorageBlock extends Component {
 			mediaStorage,
 			siteSlug,
 			translate,
-			onClick
 		} = this.props;
 
 		if ( ! mediaStorage || mediaStorage.max_storage_bytes === -1 ) {
@@ -54,7 +50,7 @@ class PlanStorageBlock extends Component {
 		const max = filesize( mediaStorage.max_storage_bytes );
 
 		return (
-			<div className={ classes } onClick={ onClick }>
+			<div className={ classes }>
 				<ProgressBar
 					className="plan-storage__bar"
 					value={ percent }
