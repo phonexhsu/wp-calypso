@@ -19,18 +19,21 @@ class PlanStorageBlock extends Component {
 	static propTypes = {
 		className: PropTypes.string,
 		mediaStorage: PropTypes.object,
+		siteSlug: PropTypes.string.isRequired,
 		sitePlanName: PropTypes.string.isRequired,
 		onClick: PropTypes.func,
 	};
 
 	static defaultProps = {
-		onClick: noop
+		onClick: noop,
+		siteSlug: ''
 	};
 
 	render() {
 		const {
 			className,
 			mediaStorage,
+			siteSlug,
 			translate,
 			onClick
 		} = this.props;
@@ -38,6 +41,7 @@ class PlanStorageBlock extends Component {
 		if ( ! mediaStorage || mediaStorage.max_storage_bytes === -1 ) {
 			return null;
 		}
+
 		const percent = Math.min(
 			Math.round( mediaStorage.storage_used_bytes / mediaStorage.max_storage_bytes * 1000 ) / 10,
 		100 );
@@ -51,6 +55,12 @@ class PlanStorageBlock extends Component {
 
 		return (
 			<div className={ classes } onClick={ onClick }>
+				<ProgressBar
+					className="plan-storage__bar"
+					value={ percent }
+					total={ 100 }
+					compact={ true } />
+
 				<span className="plan-storage__storage-label" >
 					{ translate( '%(percent)f%% of %(max)s used', {
 						args: {
@@ -60,11 +70,11 @@ class PlanStorageBlock extends Component {
 					} ) }
 				</span>
 
-				<ProgressBar
-					className="plan-storage__bar"
-					value={ percent }
-					total={ 100 }
-					compact={ true } />
+				<span className="plan-storage__storage-link" >
+					<a href={ `/plans/${ siteSlug }` }>
+						{ translate( 'Upgrade' ) }
+					</a>
+				</span>
 
 				{ this.props.children }
 			</div>

@@ -39,6 +39,7 @@ class PlanStorage extends Component {
 			<div className={ classes } >
 				<QueryMediaStorage siteId={ siteId } />
 				<PlanStorageBlock
+					siteSlug={ site.Slug }
 					sitePlanName={ site.plan.product_name_short }
 					mediaStorage={ this.props.mediaStorage }
 					onClick={ this.props.onClick }
