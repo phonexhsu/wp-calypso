@@ -22,8 +22,10 @@ export default React.createClass( {
 	render() {
 		const plans = {
 			free: 'Free',
-			premium: 'Premium'
+			premium: 'Premium',
+			business: 'Business',
 		};
+
 		const mediaStorage = {
 			red: {
 				storage_used_bytes: 11362335981,
@@ -63,6 +65,17 @@ export default React.createClass( {
 					<PlanStorageBlock
 						siteSlug={ primarySite.slug }
 						sitePlanName={ plans.premium }
+						mediaStorage={ mediaStorage.red }
+					/>
+				</div>
+
+				<div style={ { marginBottom: 16 } }>
+					<span style={ { fontSize: 12, color: 'grey' } }>
+						No render PlanStorage here since it's a business plan.
+					</span>
+					<PlanStorageBlock
+						siteSlug={ primarySite.slug }
+						sitePlanName={ plans.business }
 						mediaStorage={ mediaStorage.red }
 					/>
 				</div>
