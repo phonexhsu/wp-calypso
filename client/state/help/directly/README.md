@@ -1,10 +1,13 @@
 Directly state
 ==============
 
-Provides a Redux interface to the imperative [Directly API](../../api/directly).
+[Directly](https://www.directly.com/) is an on-demand customer support tool. Read more
+about Directly and how it's used in Calypso in the [`lib/directly` README](../../../lib/directly/README.md).
 
 ## Action Creators
-These dispatch simple Actions without calling the Directly API:
+These action creators return simple actions. The Directly API is called from the
+[data-layer](../../data-layer/third-party/directly/README.md) when these actions
+are intercepted in middleware.
 
 * `initialize( config )`  
   Initializes the library with the given configuration options. See [the `api/directly`
@@ -13,6 +16,3 @@ These dispatch simple Actions without calling the Directly API:
 * `maximize()`
 * `minimize()`
 * `openAskForm()`
-
-## Middleware
-The middleware watches for Directly action types and engages the Directly API correspondingly.
