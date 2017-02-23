@@ -12,7 +12,7 @@ import noop from 'lodash/noop';
 import QueryMediaStorage from 'components/data/query-media-storage';
 import { getMediaStorage } from 'state/sites/media-storage/selectors';
 import { getSite } from 'state/sites/selectors';
-import PlanStorageButton from './block';
+import PlanStorageBlock from './block';
 
 class PlanStorage extends Component {
 	static propTypes = {
@@ -38,13 +38,13 @@ class PlanStorage extends Component {
 		return (
 			<div className={ classes } >
 				<QueryMediaStorage siteId={ siteId } />
-				<PlanStorageButton
+				<PlanStorageBlock
 					sitePlanName={ site.plan.product_name_short }
 					mediaStorage={ this.props.mediaStorage }
 					onClick={ this.props.onClick }
 				>
 					{ this.props.children }
-				</PlanStorageButton>
+				</PlanStorageBlock>
 			</div>
 		);
 	}
