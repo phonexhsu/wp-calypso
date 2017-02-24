@@ -26,6 +26,8 @@ import notices from 'notices';
 import debugFactory from 'debug';
 import { uploadTheme, clearThemeUpload, initiateThemeTransfer } from 'state/themes/actions';
 import { getSelectedSiteId, getSelectedSite } from 'state/ui/selectors';
+import { hasFeature } from 'state/sites/plans/selectors';
+import { FEATURE_UNLIMITED_PREMIUM_THEMES } from 'lib/plans/constants';
 import { isJetpackSite, hasJetpackSiteJetpackThemesExtendedFeatures } from 'state/sites/selectors';
 import {
 	isUploadInProgress,
@@ -323,7 +325,9 @@ export default connect(
 		);
 		return {
 			siteId,
+			isBusiness: hasFeature( state, siteId, FEATURE_UNLIMITED_PREMIUM_THEMES ),
 			selectedSite: getSelectedSite( state ),
+			isJetpack,
 			inProgress: isUploadInProgress( state, siteId ),
 			complete: isUploadComplete( state, siteId ),
 			failed: hasUploadFailed( state, siteId ),
