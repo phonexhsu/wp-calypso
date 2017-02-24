@@ -39,7 +39,7 @@ export const GDocsIntegrationTour = makeTour(
 					href="https://wordpress.com">
 					{ translate( 'Learn more' ) }
 				</LinkQuit>
-				<Quit>{ translate( 'No, thanks' ) }</Quit>
+				<Quit>{ translate( 'No thanks' ) }</Quit>
 			</ButtonRow>
 		</Step>
 	</Tour>
